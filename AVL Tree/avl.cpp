@@ -30,7 +30,6 @@ void AVLTree::insert(Node *&currentNode, Alumno &elem){
 	rebalanceInserted(currentNode, elem);
 }
 
-
 void AVLTree::replaceNode(Node *&oldNode, Node *&currentNode){
 	if(currentNode->right != nullptr){
 		replaceNode(oldNode, currentNode->right);
@@ -40,7 +39,6 @@ void AVLTree::replaceNode(Node *&oldNode, Node *&currentNode){
 		currentNode = currentNode->left;
 	}
 }
-
 
 bool AVLTree::erase(Node *&currentNode, const int &elem){
 	if(currentNode == nullptr){
@@ -67,7 +65,18 @@ bool AVLTree::erase(Node *&currentNode, const int &elem){
 	}
 }
 
+Alumno* AVLTree::find(Node *currentNode, int id){
+	if(currentNode != nullptr){
+		if(currentNode->value.getId() == id){
+			return &currentNode->value;
+		}
+		find(currentNode->left, id);
+		find(currentNode->right, id);
+		return nullptr;
+	}
+	return nullptr;
 
+}
 
 void AVLTree::preOrder(Node *currentNode, int level){
         if (!currentNode){

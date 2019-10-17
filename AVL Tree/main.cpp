@@ -8,6 +8,7 @@ using namespace std;
 enum options{
 	INSERT = 1,
 	ERASE,
+	FIND,
 	PREORDER,
 	INORDER,
 	POSORDER,
@@ -18,11 +19,11 @@ void setAlumno(Alumno *al);
 
 int main(){
 
-	// BinarySearchTree tree;
 	AVLTree avlTree;
 
 	int opt, tempId;
 	Alumno aux;
+	Alumno* auxptr;
 
 	do{
 		showMenu();
@@ -30,16 +31,33 @@ int main(){
 		switch(opt){
 			case INSERT:
 				setAlumno(&aux);
-				avlTree.insert(aux);
-				cout << aux.getString() <<  endl;
+				auxptr = avlTree.find(aux.getId());
+				if(auxptr != nullptr){
+					cout << endl << "Se encontró un alumno con ese, el elemento no se ha agregado al arbol." << endl;
+				}else{
+					avlTree.insert(aux);
+					cout << endl << "El elemento se ha agregado correctamente al árbol." << endl;
+					cout << aux.getString() <<  endl;
+				}
 				break;
 			case ERASE:
-				cout << "Ingrese el ID del alumno que desea eliminar: ";
+				cout << endl << "Ingrese el ID del alumno que desea eliminar: ";
 				cin >> tempId;
 				if(avlTree.erase(tempId)){
-					cout << "El elemento " << tempId << " se ha eliminado correctamente." << endl;
+					cout << endl << "El elemento " << tempId << " se ha eliminado correctamente." << endl;
 				}else{
 					cout << "No se encontro el elemento " << tempId << "." << endl;
+				}
+				break;
+			case FIND:
+				cout << "Ingrese el ID del alumno que desea eliminar: ";
+				cin >> tempId;
+				auxptr = avlTree.find(tempId);
+				if(auxptr != nullptr){
+					cout << endl << "El elemento encontrado es el siguiente: " << endl
+				 		<< auxptr->getString() << endl << endl;
+				}else{
+					cout << "No se ha encontrado un elemento con ese ID." << endl;
 				}
 				break;
 			case PREORDER:
@@ -73,6 +91,7 @@ void showMenu(){
 	cout << "\n\n\tArbol de busqueda binaria" << endl
 		<< INSERT << ") Ingresar un elemento al arbol." << endl
 		<< ERASE << ") Eliminar un elemento del arbol." << endl
+		<< FIND << ") Buscar elemento por llave primaria." << endl
 		<< PREORDER << ") Hacer recorrido pre-orden." << endl
 		<< INORDER << ") Hacer recorrido en-orden." << endl
 		<< POSORDER << ") Hacer recorrido pos-orden." << endl
@@ -101,9 +120,3 @@ void setAlumno(Alumno *al){
 	al->setApellidoMaterno(mat);
 	al->setCarrera(car);
 }
-
-/*
-
-Tiene que ser un arbol autobalanceable
-
-*/

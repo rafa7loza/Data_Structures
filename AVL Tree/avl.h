@@ -14,6 +14,7 @@ public:
 	}
 	bool erase(const int &value){ return erase(root, value); }
 	void preOrder(){ preOrder(root, 0); }
+	Alumno* find(int id){ return find(root, id);}
 	void inOrder(){ inOrder(root); }
 	void posOrder(){ posOrder(root); }
 
@@ -22,6 +23,7 @@ private:
 	Node *root;
 	bool erase(Node *&currentNode, const int &elem);
 	void insert(Node *&currentNode,  Alumno &elem);
+	Alumno* find(Node *currentNode, int id);
   void replaceNode(Node *&oldNode, Node *&currentNode);
 	void preOrder(Node *currentNode, int level);
 	void inOrder(Node *currentNode);
