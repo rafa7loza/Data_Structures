@@ -1,5 +1,4 @@
 #include <iostream>
-#include "bst.h"
 #include "avl.h"
 #include "alumno.h"
 
@@ -19,7 +18,7 @@ void setAlumno(Alumno *al);
 
 int main(){
 
-	BinarySearchTree tree;
+	// BinarySearchTree tree;
 	AVLTree avlTree;
 
 	int opt, tempId;
@@ -31,31 +30,31 @@ int main(){
 		switch(opt){
 			case INSERT:
 				setAlumno(&aux);
-				tree.insert(aux);
+				avlTree.insert(aux);
 				cout << aux.getString() <<  endl;
 				break;
 			case ERASE:
 				cout << "Ingrese el ID del alumno que desea eliminar: ";
 				cin >> tempId;
-				if(tree.erase(tempId)){
+				if(avlTree.erase(tempId)){
 					cout << "El elemento " << tempId << " se ha eliminado correctamente." << endl;
 				}else{
 					cout << "No se encontro el elemento " << tempId << "." << endl;
 				}
 				break;
 			case PREORDER:
-				cout << "Realizando recorrido pre-orden: ";
-				tree.preOrder();
+				cout << "Realizando recorrido pre-orden: " << endl;
+				avlTree.preOrder();
 				cout << endl;
 				break;
 			case INORDER:
-				cout << "Realizando recorrido en-orden: ";
-				tree.inOrder();
+				cout << "Realizando recorrido en-orden: " << endl;
+				avlTree.inOrder();
 				cout << endl;
 				break;
 			case POSORDER:
-				cout << "Realizando recorrido pos-orden: ";
-				tree.posOrder();
+				cout << "Realizando recorrido pos-orden: " << endl;
+				avlTree.posOrder();
 				cout << endl;
 				break;
 			case EXIT:
