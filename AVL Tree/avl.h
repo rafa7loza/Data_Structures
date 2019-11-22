@@ -11,6 +11,7 @@ public:
 	AVLTree();
 	void insert( Alumno &value){
 		insert(root, value);
+		balance(root);
 	}
 	bool erase(const int &value){ return erase(root, value); }
 	void preOrder(){ preOrder(root, 0); }
@@ -30,8 +31,9 @@ private:
 	void posOrder(Node *currentNode);
 	void rebalanceInserted(Node *&node, Alumno &elem);
 	void rebalanceDelete(Node *&);
+	void balance(Node *&node);
 	int getBalance(Node *currentNode);
-	int updateHeight(Node *currentNode);
+	int updateHeight(Node *&currentNode);
 	int getHeight(Node *currentNode);
   Node* leftRotate(Node *&x);
   Node* rightRotate(Node *&y);

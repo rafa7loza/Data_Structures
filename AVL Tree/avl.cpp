@@ -79,13 +79,14 @@ Alumno* AVLTree::find(Node *currentNode, int id){
 }
 
 void AVLTree::preOrder(Node *currentNode, int level){
-        if (!currentNode){
-        	return;
-        }
-				++level;
-        cout << currentNode->value.getString() << endl;
-        preOrder(currentNode->left, level);
-        preOrder(currentNode->right, level);
+	balance(currentNode);
+	if (!currentNode){
+		return;
+	}
+	++level;
+	cout << currentNode->value.getString() << endl;
+	preOrder(currentNode->left, level);
+	preOrder(currentNode->right, level);
 }
 
 void AVLTree::inOrder(Node *currentNode){
@@ -120,7 +121,7 @@ int AVLTree::getHeight(Node *currentNode){
   return currentNode->height;
 }
 
-int AVLTree::updateHeight(Node *currentNode){
+int AVLTree::updateHeight(Node *&currentNode){
 	return max(getHeight(currentNode->left), getHeight(currentNode->right))+1;
 }
 
@@ -157,16 +158,40 @@ void AVLTree::rebalanceInserted(Node *&node, Alumno &elem){
 
 	if(balance > 1 && elem.getId() < node->left->value.getId()){
 		node = rightRotate(node);
-	}else if(balance < -1 && elem.getId() > node->right->value.getId()){
+	}
+	if(balance < -1 && elem.getId() > node->right->value.getId()){
 		node = leftRotate(node);
-	}else if(balance > 1 && elem.getId() > node->left->value.getId()){
+	}
+	if(balance > 1 && elem.getId() > node->left->value.getId()){
 		node->left = leftRotate(node->left);
 		node = rightRotate(node);
-	}else if(balance < -1 && elem.getId() < node->right->value.getId()){
+	}
+	if(balance < -1 && elem.getId() < node->right->value.getId()){
 		node->right = rightRotate(node->right);
 		node = leftRotate(node);
 	}
 }
+
+void AVLTree::balance(Node *&node){
+	if(node == nullptr) return;
+
+	node->height = updateHeight(node);
+
+	int balance = getBalance(node);
+
+	if(balance > 1){
+		node = rightRotate(node);
+	}else if(balance < -1){
+		node = leftRotate(node);
+	}else if(balance > 1){
+		node->left = leftRotate(node->left);
+		node = rightRotate(node);
+	}else if(balance < -1){
+		node->right = rightRotate(node->right);
+		node = leftRotate(node);
+	}
+}
+
 
 void AVLTree::rebalanceDelete(Node *&node){
 	Node* rightChild = node->right;
@@ -179,14 +204,14 @@ void AVLTree::rebalanceDelete(Node *&node){
 		node = rightRotate(node);
 	}
 	if(balance > 1 && getBalance(leftChild) < 0){
-			node->left = leftRotate(node->left);
-			node = rightRotate(node);
+		node->left = leftRotate(node->left);
+		node = rightRotate(node);
 	}
 	if(balance < -1 && getBalance(rightChild) <= 0){
 		node = leftRotate(node);
 	}
 	if(balance < -1 && getBalance(rightChild) > 0){
-			node->right = rightRotate(node->right);
-			node = leftRotate(node);
+		node->right = rightRotate(node->right);
+		node = leftRotate(node);
 	}
 }

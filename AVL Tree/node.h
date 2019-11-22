@@ -7,7 +7,7 @@ class Node{
 public:
 	// Node(int elem) : value(elem), left(nullptr), right(nullptr){}
 	// int value;
-	Node(Alumno alumno) : value(alumno), left(nullptr), right(nullptr), height(0){}
+	Node(Alumno alumno) : value(alumno), left(nullptr), right(nullptr), height(1){}
 	Alumno value;
 	Node *left, *right;
 	int height;
